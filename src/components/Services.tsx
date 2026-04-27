@@ -60,9 +60,9 @@ export default function Services() {
                   <NavHashLink 
                     smooth 
                     to="/#contact" 
-                    className="flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] gold-text font-bold hover:gap-4 transition-all"
+                    className="flex items-center justify-center gap-3 w-full py-4 border gold-border/20 text-[9px] uppercase tracking-[0.3em] gold-text font-bold hover:bg-gold hover:text-onyx transition-all duration-300"
                   >
-                    Reserve Session <ArrowRight className="w-3 h-3" />
+                    Book Now <ArrowRight className="w-3 h-3" />
                   </NavHashLink>
                 </motion.div>
               ))}
@@ -103,9 +103,9 @@ export default function Services() {
                   <NavHashLink 
                     smooth 
                     to="/#contact" 
-                    className="flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] gold-text font-bold hover:gap-4 transition-all"
+                    className="flex items-center justify-center gap-3 w-full py-4 border gold-border/20 text-[9px] uppercase tracking-[0.3em] gold-text font-bold hover:bg-gold hover:text-onyx transition-all duration-300"
                   >
-                    Reserve Session <ArrowRight className="w-3 h-3" />
+                    Book Now <ArrowRight className="w-3 h-3" />
                   </NavHashLink>
                 </motion.div>
               ))}

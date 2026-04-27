@@ -18,6 +18,9 @@ import Gallery from './components/Gallery';
 import Footer from './components/Footer';
 import ProductDetail from './components/ProductDetail';
 import Shop from './components/Shop';
+import Testimonials from './components/Testimonials';
+import LoyaltyProgram from './components/LoyaltyProgram';
+import FAQ from './components/FAQ';
 import { WishlistProvider } from './context/WishlistContext';
 
 import PromoBanner from './components/PromoBanner';
@@ -34,8 +37,11 @@ function Home() {
       <PromoBanner />
       <section className="relative z-10 bg-onyx">
         <Services />
+        <LoyaltyProgram />
         <Store />
+        <Testimonials />
         <Gallery />
+        <FAQ />
       </section>
     </motion.div>
   );

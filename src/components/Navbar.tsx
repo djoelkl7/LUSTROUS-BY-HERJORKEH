@@ -24,6 +24,7 @@ export default function Navbar() {
           <NavHashLink smooth to="/#services" className="gold-text hover:text-white transition-colors">Services</NavHashLink>
           <NavHashLink smooth to="/#store" className="hover:text-gold transition-colors">Store</NavHashLink>
           <NavHashLink smooth to="/#gallery" className="hover:text-gold transition-colors">Gallery</NavHashLink>
+          <NavHashLink smooth to="/#faq" className="hover:text-gold transition-colors">Inquiry</NavHashLink>
           <NavHashLink smooth to="/#contact" className="hover:text-gold transition-colors">Contact</NavHashLink>
         </div>
 

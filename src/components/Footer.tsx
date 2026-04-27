@@ -1,10 +1,11 @@
-import { Instagram, MapPin, Phone, Mail, Calendar, Clock, Check, User, PhoneCall } from 'lucide-react';
+import { Instagram, MapPin, Phone, Mail, Calendar, Clock, Check, User, PhoneCall, Sparkles } from 'lucide-react';
 import React, { useState } from 'react';
 import { SERVICES } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function Footer() {
   const [bookingStep, setBookingStep] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [selectedTime, setSelectedTime] = useState('09:00 AM');
 
   const handleBooking = (e: React.FormEvent) => {
     e.preventDefault();
@@ -131,19 +132,27 @@ export default function Footer() {
                         <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Desired Date</label>
                         <div className="relative">
                             <Calendar className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-gold/40" />
-                            <input type="date" required className="w-full bg-onyx border gold-border/20 p-5 pl-14 text-xs font-medium focus:gold-border outline-none" />
+                            <input 
+                              type="date" 
+                              required 
+                              min={new Date().toISOString().split('T')[0]}
+                              className="w-full bg-onyx border gold-border/20 p-5 pl-14 text-xs font-medium focus:gold-border outline-none transition-all" 
+                            />
                         </div>
                     </div>
                     <div className="space-y-3">
-                        <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Preferred Slot</label>
-                        <div className="relative">
-                            <Clock className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-gold/40" />
-                            <select required className="w-full bg-onyx border gold-border/20 p-5 pl-14 text-xs font-medium focus:gold-border outline-none appearance-none cursor-pointer">
-                                <option>09:00 AM - 11:30 AM</option>
-                                <option>12:00 PM - 02:30 PM</option>
-                                <option>03:00 PM - 05:30 PM</option>
-                                <option>06:00 PM - 08:30 PM</option>
-                            </select>
+                        <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Available Slots</label>
+                        <div className="grid grid-cols-2 gap-2">
+                           {['09:00 AM', '11:00 AM', '02:00 PM', '04:00 PM'].map((slot) => (
+                             <button
+                               key={slot}
+                               type="button"
+                               onClick={() => setSelectedTime(slot)}
+                               className={`py-3 text-[10px] border transition-all ${selectedTime === slot ? 'bg-gold text-onyx border-gold' : 'gold-border/20 text-gray-500 hover:gold-border/50'}`}
+                             >
+                               {slot}
+                             </button>
+                           ))}
                         </div>
                     </div>
                   </div>

@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { PRODUCTS } from '../types';
-import { ArrowLeft, ShoppingBag, Star, ShieldCheck, Truck, Heart, User, Send } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, Star, ShieldCheck, Truck, Heart, User, Send, Share2, Facebook, Twitter, MessageCircle } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useWishlist } from '../context/WishlistContext';
 
@@ -25,6 +25,15 @@ export default function ProductDetail() {
 
   const [newReview, setNewReview] = useState({ rating: 5, comment: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const productUrl = window.location.href;
+  const shareText = `Check out this exclusive ${product?.name} from LUSTROUS Studio!`;
+
+  const shareLinks = [
+    { name: 'Facebook', icon: Facebook, url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(productUrl)}` },
+    { name: 'Twitter', icon: Twitter, url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(productUrl)}` },
+    { name: 'Pinterest', icon: Share2, url: `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(productUrl)}&description=${encodeURIComponent(shareText)}` }
+  ];
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -123,6 +132,27 @@ export default function ProductDetail() {
             <div className="prose prose-invert prose-sm max-w-none mb-12 text-gray-400 leading-relaxed font-light italic">
               <p>{product.description}</p>
               <p className="mt-4">Designed for those who demand excellence. This signature formula is crafted with premium ingredients to ensure your lashes and nails maintain that signature "Lustrous" glow long after your appointment.</p>
+            </div>
+
+            <div className="flex flex-col gap-6 mb-12">
+              <div className="flex items-center gap-4">
+                <span className="text-[10px] uppercase tracking-[0.3em] text-gray-500 font-bold">Share Masterpiece</span>
+                <div className="h-[1px] flex-grow bg-gold/10" />
+              </div>
+              <div className="flex gap-4">
+                {shareLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-10 h-10 border gold-border/20 flex items-center justify-center hover:bg-gold hover:text-onyx transition-all duration-300 group"
+                    title={`Share on ${link.name}`}
+                  >
+                    <link.icon className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  </a>
+                ))}
+              </div>
             </div>
 
             <div className="grid grid-cols-2 gap-8 pt-8 border-t gold-border/20">
