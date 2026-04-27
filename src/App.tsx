@@ -20,6 +20,8 @@ import ProductDetail from './components/ProductDetail';
 import Shop from './components/Shop';
 import { WishlistProvider } from './context/WishlistContext';
 
+import PromoBanner from './components/PromoBanner';
+
 function Home() {
   return (
     <motion.div
@@ -29,6 +31,7 @@ function Home() {
       transition={{ duration: 1 }}
     >
       <Hero />
+      <PromoBanner />
       <section className="relative z-10 bg-onyx">
         <Services />
         <Store />

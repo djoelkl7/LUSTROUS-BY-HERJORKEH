@@ -1,18 +1,53 @@
 import { useParams, Link } from 'react-router-dom';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { PRODUCTS } from '../types';
-import { ArrowLeft, ShoppingBag, Star, ShieldCheck, Truck, Heart } from 'lucide-react';
-import { useEffect } from 'react';
+import { ArrowLeft, ShoppingBag, Star, ShieldCheck, Truck, Heart, User, Send } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 import { useWishlist } from '../context/WishlistContext';
+
+interface Review {
+  id: string;
+  user: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
 
 export default function ProductDetail() {
   const { id } = useParams();
   const product = PRODUCTS.find(p => p.id === id);
   const { toggleWishlist, isInWishlist } = useWishlist();
+  
+  const [reviews, setReviews] = useState<Review[]>([
+    { id: '1', user: 'Sophia L.', rating: 5, comment: 'Absolutely divine! The quality is unmatched and the packaging felt so luxurious.', date: '2024-03-15' },
+    { id: '2', user: 'Marcus G.', rating: 4, comment: 'Great product, definitely noticed a difference in lash longevity.', date: '2024-03-10' }
+  ]);
+
+  const [newReview, setNewReview] = useState({ rating: 5, comment: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleSubmitReview = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newReview.comment.trim()) return;
+
+    setIsSubmitting(true);
+    setTimeout(() => {
+      const review: Review = {
+        id: Date.now().toString(),
+        user: 'Guest User',
+        rating: newReview.rating,
+        comment: newReview.comment,
+        date: new Date().toISOString().split('T')[0]
+      };
+      setReviews(prev => [review, ...prev]);
+      setNewReview({ rating: 5, comment: '' });
+      setIsSubmitting(false);
+    }, 1000);
+  };
 
   if (!product) {
     return (
@@ -32,7 +67,7 @@ export default function ProductDetail() {
           <ArrowLeft className="w-4 h-4" /> Back to Collection
         </Link>
 
-        <div className="grid lg:grid-cols-2 gap-20 items-start">
+        <div className="grid lg:grid-cols-2 gap-20 items-start mb-32">
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -59,9 +94,16 @@ export default function ProductDetail() {
             
             <div className="flex items-center gap-4 mb-8 text-gold">
               <div className="flex">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
+                {[...Array(5)].map((_, i) => (
+                  <Star 
+                    key={i} 
+                    className={`w-4 h-4 ${i < (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length) ? 'fill-current' : 'opacity-30'}`} 
+                  />
+                ))}
               </div>
-              <span className="text-gray-500 text-xs tracking-widest font-medium uppercase mt-1">128 Reviews</span>
+              <span className="text-gray-500 text-xs tracking-widest font-medium uppercase mt-1">
+                {reviews.length} {reviews.length === 1 ? 'Review' : 'Reviews'}
+              </span>
             </div>
 
             <p className="text-3xl font-light mb-8">${product.price.toFixed(2)}</p>
@@ -100,6 +142,93 @@ export default function ProductDetail() {
               </div>
             </div>
           </motion.div>
+        </div>
+
+        {/* Reviews Section */}
+        <div className="grid lg:grid-cols-3 gap-20">
+          <div className="lg:col-span-1">
+            <h2 className="text-2xl font-serif mb-2">Client Experience</h2>
+            <p className="text-xs uppercase tracking-[0.3em] text-gray-500 mb-8">Share your thoughts with us</p>
+            
+            <form onSubmit={handleSubmitReview} className="bg-dark-gray border gold-border/20 p-8 space-y-6">
+              <div>
+                <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-4 block">Impact Rating</label>
+                <div className="flex gap-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      onClick={() => setNewReview(prev => ({ ...prev, rating: star }))}
+                      className="transition-transform active:scale-90"
+                    >
+                      <Star className={`w-6 h-6 ${star <= newReview.rating ? 'text-gold fill-current' : 'text-gray-800'}`} />
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              <div>
+                <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-4 block">Your Perspective</label>
+                <textarea
+                  required
+                  value={newReview.comment}
+                  onChange={(e) => setNewReview(prev => ({ ...prev, comment: e.target.value }))}
+                  placeholder="Describe your lustrous experience..."
+                  className="w-full bg-onyx border gold-border/20 p-4 text-xs font-light italic text-white focus:border-gold outline-none min-h-[120px] transition-colors"
+                />
+              </div>
+
+              <button 
+                type="submit"
+                disabled={isSubmitting}
+                className="gold-button w-full flex items-center justify-center gap-3 disabled:opacity-50"
+              >
+                {isSubmitting ? 'Recording...' : (
+                  <>Submit Review <Send className="w-3 h-3" /></>
+                )}
+              </button>
+            </form>
+          </div>
+
+          <div className="lg:col-span-2">
+            <div className="flex items-center justify-between mb-12 border-b gold-border/20 pb-4">
+               <h3 className="text-xs uppercase tracking-[0.4em] text-gold font-bold">Public Journal</h3>
+               <span className="text-[10px] text-gray-500 uppercase tracking-widest">{reviews.length} Total</span>
+            </div>
+
+            <div className="space-y-12">
+              <AnimatePresence mode="popLayout">
+                {reviews.map((review) => (
+                  <motion.div 
+                    key={review.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full border gold-border/30 flex items-center justify-center bg-gold/5">
+                          <User className="w-4 h-4 text-gold/60" />
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold uppercase tracking-widest">{review.user}</p>
+                          <p className="text-[9px] text-gray-500 uppercase">{review.date}</p>
+                        </div>
+                      </div>
+                      <div className="flex">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className={`w-3 h-3 ${i < review.rating ? 'text-gold fill-current' : 'text-gray-800'}`} />
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-sm font-light italic text-gray-400 leading-relaxed border-l-2 gold-border/20 pl-6 group-hover:border-gold transition-colors">
+                      "{review.comment}"
+                    </p>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          </div>
         </div>
       </div>
     </div>

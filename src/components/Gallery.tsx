@@ -47,14 +47,15 @@ export default function Gallery() {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: idx * 0.05 }}
               onClick={() => setSelectedIdx(idx)}
-              className="gallery-box mb-8 rounded-none group cursor-pointer"
+              className="gallery-box mb-8 rounded-none group cursor-pointer relative overflow-hidden"
             >
               <img 
                 src={src} 
                 alt={`Gallery ${idx + 1}`} 
-                className="w-full h-auto object-cover grayscale transition-all duration-700 group-hover:grayscale-0"
+                className="w-full h-auto object-cover grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-110"
                 referrerPolicy="no-referrer"
               />
+              <div className="absolute inset-0 bg-gold/0 group-hover:bg-gold/5 transition-colors duration-500 pointer-events-none" />
             </motion.div>
           ))}
         </div>
