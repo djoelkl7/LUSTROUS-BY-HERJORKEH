@@ -24,9 +24,9 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-6">
-          <div className="hidden md:block px-6 py-2 border gold-border text-[10px] tracking-widest uppercase cursor-pointer hover:bg-gold hover:text-black transition-colors">
+          <a href="#contact" className="hidden md:block px-6 py-2 border gold-border text-[10px] tracking-widest uppercase cursor-pointer hover:bg-gold hover:text-black transition-colors">
             Book Appointment
-          </div>
+          </a>
           <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X className="gold-text" /> : <Menu className="gold-text" />}
           </button>

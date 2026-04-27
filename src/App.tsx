@@ -17,6 +17,7 @@ import Store from './components/Store';
 import Gallery from './components/Gallery';
 import Footer from './components/Footer';
 import ProductDetail from './components/ProductDetail';
+import Shop from './components/Shop';
 
 function Home() {
   return (
@@ -45,6 +46,7 @@ export default function App() {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/shop" element={<Shop />} />
             <Route path="/product/:id" element={<ProductDetail />} />
           </Routes>
         </main>

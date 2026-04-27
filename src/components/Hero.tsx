@@ -51,12 +51,12 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.6 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <button className="gold-button flex items-center justify-center gap-2">
+          <a href="#contact" className="gold-button flex items-center justify-center gap-2">
             Book Appointment <ArrowRight className="w-4 h-4" />
-          </button>
-          <button className="px-8 py-3 rounded-full border border-white/20 hover:bg-white/10 transition-all font-medium">
+          </a>
+          <a href="#services" className="px-8 py-3 rounded-full border border-white/20 hover:bg-white/10 transition-all font-medium text-[10px] uppercase tracking-widest flex items-center justify-center">
             Explore Services
-          </button>
+          </a>
         </motion.div>
       </div>
 

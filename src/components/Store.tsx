@@ -49,9 +49,9 @@ export default function Store() {
         </div>
 
         <div className="mt-20 text-center">
-            <button className="text-gold border-b border-gold px-2 py-1 tracking-widest text-sm uppercase hover:text-white hover:border-white transition-all">
+            <Link to="/shop" className="text-gold border-b border-gold px-2 py-1 tracking-widest text-sm uppercase hover:text-white hover:border-white transition-all">
                 View Full Shop
-            </button>
+            </Link>
         </div>
       </div>
     </section>
