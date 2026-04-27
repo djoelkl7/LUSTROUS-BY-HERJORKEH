@@ -1,8 +1,12 @@
 import { motion } from 'motion/react';
 import { PRODUCTS } from '../types';
 import { Link } from 'react-router-dom';
+import { Heart } from 'lucide-react';
+import { useWishlist } from '../context/WishlistContext';
 
 export default function Store() {
+  const { toggleWishlist, isInWishlist } = useWishlist();
+
   return (
     <section id="store" className="py-32 px-6 bg-white/[0.02]">
       <div className="max-w-7xl mx-auto">
@@ -26,7 +30,7 @@ export default function Store() {
               transition={{ delay: idx * 0.1 }}
               className="bg-gold/5 border gold-border p-6 group flex flex-col"
             >
-              <Link to={`/product/${product.id}`} className="block">
+              <Link to={`/product/${product.id}`} className="block relative">
                 <div className="relative aspect-square overflow-hidden mb-6 bg-onyx border gold-border/20">
                   <img 
                     src={product.image} 
@@ -35,6 +39,12 @@ export default function Store() {
                     referrerPolicy="no-referrer"
                   />
                 </div>
+                <button 
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleWishlist(product.id); }}
+                  className={`absolute top-4 right-4 p-2 rounded-full border gold-border z-10 transition-all duration-300 ${isInWishlist(product.id) ? 'bg-gold text-onyx' : 'bg-black/40 text-white hover:bg-gold/10'}`}
+                >
+                  <Heart className={`w-3 h-3 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
+                </button>
                 <h3 className="text-sm uppercase tracking-widest font-bold mb-2 gold-text">{product.name}</h3>
                 <p className="text-gray-400 text-[10px] mb-6 flex-grow">{product.description}</p>
               </Link>

@@ -1,10 +1,13 @@
 import { motion } from 'motion/react';
 import { PRODUCTS } from '../types';
 import { Link } from 'react-router-dom';
-import { ShoppingBag, ArrowLeft } from 'lucide-react';
+import { ShoppingBag, ArrowLeft, Heart } from 'lucide-react';
 import { useEffect } from 'react';
+import { useWishlist } from '../context/WishlistContext';
 
 export default function Shop() {
+  const { toggleWishlist, isInWishlist } = useWishlist();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -39,7 +42,7 @@ export default function Shop() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
-              className="bg-gold/5 border gold-border p-8 group"
+              className="bg-gold/5 border gold-border p-8 group relative"
             >
               <Link to={`/product/${product.id}`}>
                 <div className="relative aspect-square overflow-hidden mb-8 bg-onyx border gold-border/20">
@@ -58,9 +61,17 @@ export default function Shop() {
               </Link>
               <div className="flex items-center justify-between border-t gold-border/20 pt-6">
                 <span className="text-lg font-semibold">${product.price.toFixed(2)}</span>
-                <button className="gold-button !px-6 !py-2">
-                  Add to Bag
-                </button>
+                <div className="flex gap-2">
+                  <button 
+                    onClick={() => toggleWishlist(product.id)}
+                    className={`p-2 border gold-border transition-all duration-300 ${isInWishlist(product.id) ? 'bg-gold text-onyx' : 'hover:bg-gold/10'}`}
+                  >
+                    <Heart className={`w-4 h-4 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
+                  </button>
+                  <button className="gold-button !px-6 !py-2 text-[10px]">
+                    Add to Bag
+                  </button>
+                </div>
               </div>
             </motion.div>
           ))}

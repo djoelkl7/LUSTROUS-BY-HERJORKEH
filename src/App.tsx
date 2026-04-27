@@ -18,6 +18,7 @@ import Gallery from './components/Gallery';
 import Footer from './components/Footer';
 import ProductDetail from './components/ProductDetail';
 import Shop from './components/Shop';
+import { WishlistProvider } from './context/WishlistContext';
 
 function Home() {
   return (
@@ -40,25 +41,27 @@ function Home() {
 export default function App() {
   return (
     <Router>
-      <div className="relative scroll-smooth overflow-x-hidden min-h-screen flex flex-col">
-        <Navbar />
-        
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/product/:id" element={<ProductDetail />} />
-          </Routes>
-        </main>
+      <WishlistProvider>
+        <div className="relative scroll-smooth overflow-x-hidden min-h-screen flex flex-col">
+          <Navbar />
+          
+          <main className="flex-grow">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/shop" element={<Shop />} />
+              <Route path="/product/:id" element={<ProductDetail />} />
+            </Routes>
+          </main>
 
-        <Footer />
+          <Footer />
 
-        {/* Luxury Background Accents */}
-        <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-1/4 -left-20 w-96 h-96 bg-gold/5 blur-[120px] rounded-full" />
-          <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-gold/5 blur-[120px] rounded-full" />
+          {/* Luxury Background Accents */}
+          <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+            <div className="absolute top-1/4 -left-20 w-96 h-96 bg-gold/5 blur-[120px] rounded-full" />
+            <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-gold/5 blur-[120px] rounded-full" />
+          </div>
         </div>
-      </div>
+      </WishlistProvider>
     </Router>
   );
 }

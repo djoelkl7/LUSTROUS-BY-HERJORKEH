@@ -1,12 +1,14 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { PRODUCTS } from '../types';
-import { ArrowLeft, ShoppingBag, Star, ShieldCheck, Truck } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, Star, ShieldCheck, Truck, Heart } from 'lucide-react';
 import { useEffect } from 'react';
+import { useWishlist } from '../context/WishlistContext';
 
 export default function ProductDetail() {
   const { id } = useParams();
   const product = PRODUCTS.find(p => p.id === id);
+  const { toggleWishlist, isInWishlist } = useWishlist();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -64,14 +66,22 @@ export default function ProductDetail() {
 
             <p className="text-3xl font-light mb-8">${product.price.toFixed(2)}</p>
             
+            <div className="flex gap-4 mb-12">
+              <button className="gold-button flex-grow flex items-center justify-center gap-3 py-5">
+                <ShoppingBag className="w-4 h-4" /> Add to Cart
+              </button>
+              <button 
+                onClick={() => toggleWishlist(product.id)}
+                className={`w-16 flex items-center justify-center border gold-border transition-all duration-300 ${isInWishlist(product.id) ? 'bg-gold text-onyx' : 'hover:bg-gold/10'}`}
+              >
+                <Heart className={`w-5 h-5 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
+              </button>
+            </div>
+
             <div className="prose prose-invert prose-sm max-w-none mb-12 text-gray-400 leading-relaxed font-light italic">
               <p>{product.description}</p>
               <p className="mt-4">Designed for those who demand excellence. This signature formula is crafted with premium ingredients to ensure your lashes and nails maintain that signature "Lustrous" glow long after your appointment.</p>
             </div>
-
-            <button className="gold-button w-full mb-12 flex items-center justify-center gap-3 py-5">
-              <ShoppingBag className="w-4 h-4" /> Add to Cart
-            </button>
 
             <div className="grid grid-cols-2 gap-8 pt-8 border-t gold-border/20">
               <div className="flex items-start gap-4">
