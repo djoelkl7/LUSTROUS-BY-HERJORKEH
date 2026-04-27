@@ -13,6 +13,9 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-onyx text-white font-sans antialiased selection:bg-gold selection:text-onyx;
   }
