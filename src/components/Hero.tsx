@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { ArrowRight, Calendar, Sparkles } from 'lucide-react';
-import { NavHashLink } from 'react-router-hash-link';
+import { HashLink } from 'react-router-hash-link';
 
 export default function Hero() {
   return (
@@ -56,7 +56,7 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.6 }}
           className="flex flex-col sm:flex-row gap-6 justify-center"
         >
-          <NavHashLink 
+          <HashLink 
             smooth 
             to="/#contact" 
             className="gold-button flex items-center justify-center gap-3 py-5 px-10 group"
@@ -64,15 +64,15 @@ export default function Hero() {
             <Calendar className="w-4 h-4 group-hover:rotate-12 transition-transform" /> 
             Book Appointment 
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </NavHashLink>
-          <NavHashLink 
+          </HashLink>
+          <HashLink 
             smooth 
             to="/#services" 
             className="px-10 py-5 rounded-none border gold-border hover:bg-gold/5 transition-all text-[10px] uppercase tracking-widest font-bold flex items-center justify-center gap-2"
           >
             <Sparkles className="w-4 h-4" />
             Explore Services
-          </NavHashLink>
+          </HashLink>
         </motion.div>
       </div>
 
